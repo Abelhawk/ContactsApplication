@@ -1,0 +1,19 @@
+- let users = [{user:'jason', email:'jason@stuckinaloop.com'}, {user:'ashley', email:'ashley@stuckinaloop.com'}, {user:'bjornbørg', email:'bjornborg@stuckinaloop.com'}];
+
+doctype html
+html
+    head
+        title It's simple! And it's a manager!
+    body
+        h1 New User
+        form(id='newUser' method='post' action='users')
+            label(for='name') Name
+            input(type='text', id='name', name='name')
+            br
+            label(for='email') Email
+            input(type='email', id='email', name='email')
+            br
+            label(for='age') Age
+            input(type='number', id='age', name='age')
+            br
+            input(type='submit' value='Submit')
