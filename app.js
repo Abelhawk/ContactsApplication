@@ -1,10 +1,12 @@
 const express = require('express');
+const userModel = require('./models/users.js');
 const path = require('path');
 const router = require('express').Router();
 const bodyParser = require('body-parser');
 let app = express();
 app.set("view engine", "pug");
 const pug = require('pug');
+const mongoose = require('./config/mongoose.js');
 
 const users = {};
 let lastId = 0;
@@ -18,24 +20,33 @@ app.get('/', function (req, res) {
     res.render('index')
 });
 
-//Create new users
+//Define user resource
 app.route('/users')
     .get(function (req, res) {
-        res.render('users', {
-            users: users
-        })
+        userModel.find({}, function (err, users) {
+            if (err) throw err;
+            console.log(users);
+            res.render('users', {
+                users: users
+            });
+        });
     })
     .post(function (req, res) {
         let user = {
-            id: lastId++,
             name: req.body.name,
             email: req.body.email,
             age: req.body.age
         };
-        users[user.id] = user;
-        console.log('Created user ' + user.name);
-        res.render("users", {
-            users: users
+        let newUser = userModel(user);
+        newUser.save(function (err) {
+            if (err) throw err;
+            console.log('Created user ' + user.name);
+            userModel.find({}, function (err, users) {
+                if (err) throw err;
+                res.render('users', {
+                    users: users
+                });
+            });
         });
     });
 
@@ -61,12 +72,19 @@ app.route('/users/:id')
         });
     });
 
+
 //Delete users
-app.route('/users/:id/delete')
+app.route('/users/:_id/delete')
     .get(function (req, res) {
-        let userId = req.params.id;
-        delete users[userId];
-        res.redirect('/users')
+        userModel.deleteOne({_id: req.params._id}, function (err) {
+            if (err) throw err;
+            userModel.find({}, function (err, users) {
+                if (err) throw err;
+                res.render('users', {
+                    users: users
+                });
+            });
+        });
     });
 
 

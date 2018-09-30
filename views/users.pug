@@ -10,22 +10,20 @@ html
             a(class='button' href='/') new user
             table
                 tr
-                    th ID
                     th Name
                     th Email
                     th Age
                     th
                     th
-                each user, id in users
+                each user, _id in users
                     tr
-                        td #{id}
                         td #{user.name}
                         td #{user.email}
                         td #{user.age}
                         td
-                            a(class='button' href='/users/'+id) edit
+                            a(class='button' href='/users/'+user._id) edit
                         td
-                            a(class='button' href='/users/'+id+'/delete') delete
+                            a(class='button' href='/users/'+user._id+'/delete') delete
                 else
                     tr
                         td Nobody!
