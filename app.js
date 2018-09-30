@@ -25,7 +25,6 @@ app.route('/users')
     .get(function (req, res) {
         userModel.find({}, function (err, users) {
             if (err) throw err;
-            console.log(users);
             res.render('users', {
                 users: users
             });
@@ -51,24 +50,30 @@ app.route('/users')
     });
 
 //Edit users
-app.route('/users/:id')
+app.route('/users/:_id')
     .get(function (req, res) {
-        let userId = req.params.id;
-        res.render('edit', {
-            user: users[userId]
-        })
+        userModel.findOne({_id: req.params._id}, function (err, user) {
+            if (err) throw err;
+            console.log(user); //todo: remove debug
+            res.render('edit', {
+                user: user
+            });
+        });
     })
     .post(function (req, res) {
         let user = {
-            id: req.body.id,
             name: req.body.name,
             email: req.body.email,
             age: req.body.age
         };
-        users[user.id] = user;
-        console.log('Updated user ' + user.name);
-        res.render("users", {
-            users: users
+        userModel.update({_id: req.params._id}, user, function (err, user) {
+            if (err) throw err;
+            userModel.find({}, function (err, users) {
+                if (err) throw err;
+                res.render('users', {
+                    users: users
+                });
+            });
         });
     });
 
