@@ -15,9 +15,9 @@ MongoClient.connect(url, function(err, db) {
         {name:'bjornbørg', email:'bjornborg@stuckinaloop.com', age:68},
         {name:'tim', email:'timbuckii@stuckinaloop.com', age:44},
         {name:'wilhelmina', email:'wilhelmina@stuckinaloop.com', age:70},
-        {name:'pedro', email:'pedro@stuckinaloop.com', age:39},
+        {name:'tiago', email:'tiago@presonumlaco.com', age:39},
         {name:'yosh', email:'yosh@stuckinaloop.com', age:40},
-        {name:'sandro', email:'jason@stuckinaloop.com', age:167},
+        {name:'sandro', email:'sandro@stuckinaloop.com', age:167},
         {name:'degio', email:'d.geo@stuckinaloop.com', age:29},
         {name:'m\'baku', email:'mbaku@stuckinaloop.com', age:34}];
     dbo.collection("names").insertMany(newUsers, function(err, res) {

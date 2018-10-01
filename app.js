@@ -54,7 +54,6 @@ app.route('/users/:_id')
     .get(function (req, res) {
         userModel.findOne({_id: req.params._id}, function (err, user) {
             if (err) throw err;
-            console.log(user); //todo: remove debug
             res.render('edit', {
                 user: user
             });
